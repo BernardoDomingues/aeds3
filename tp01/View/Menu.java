@@ -1,6 +1,6 @@
 package View;
 
-import controller.MenuActions;
+import Controller.MenuActions;
 import java.util.Scanner;
 
 public class Menu extends MenuActions {
