@@ -82,4 +82,20 @@ public class MenuActions {
       System.out.println(e.getMessage());
     }
   }
+
+  public void findAll() {
+    System.out.println("Mostrando Registros...");
+  }
+
+  public void findOne() {
+    System.out.println("Ler Registro...");
+  }
+
+  public void update() {
+    System.out.println("Atualizar Registro...");
+  }
+
+  public void delete() {
+    System.out.println("Deletar Registro...");
+  }
 }

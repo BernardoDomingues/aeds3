@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Menu extends MenuActions {
 
   private int selectedOption;
+  private Scanner scanner;
 
   public int getSelectedOption() {
     return selectedOption;
@@ -13,28 +14,56 @@ public class Menu extends MenuActions {
 
   public Menu() {
     selectedOption = 0;
+    scanner = new Scanner(System.in);
   }
 
   public void setOption() {
     System.out.println("Escolha uma opção: ");
     System.out.println("1: Carregar Dados");
-    System.out.println("2: Ler Registro");
-    System.out.println("3: Atualizar Registro");
-    System.out.println("4: Deletar Registro");
-    System.out.println("5: Sair");
-    Scanner scanner = new Scanner(System.in);
+    System.out.println("2: Mostrar Registros");
+    System.out.println("3: Ler Registro");
+    System.out.println("4: Atualizar Registro");
+    System.out.println("5: Deletar Registro");
+    System.out.println("6: Sair");
     int userEntry = Integer.parseInt(scanner.nextLine());
-    while (userEntry < 1 || userEntry > 5) {
+    while (userEntry < 1 || userEntry > 6) {
       System.out.println("Opção Inválida, tente novamente");
       userEntry = Integer.parseInt(scanner.nextLine());
     }
     selectedOption = userEntry;
-    scanner.close();
+  }
+
+  public void execute() {
+    selectedOption = 0;
+    this.setOption();
+    this.executeSelectedOption();
   }
 
   public void executeSelectedOption() {
-    if (this.selectedOption == 1) {
-      this.loadData();
+    switch (this.selectedOption) {
+      case 1:
+        this.loadData();
+        this.execute();
+        break;
+      case 2:
+        this.findAll();
+        this.execute();
+        break;
+      case 3:
+        this.findOne();
+        this.execute();
+        break;
+      case 4:
+        this.update();
+        this.execute();
+        break;
+      case 5:
+        this.delete();
+        this.execute();
+        break;
+      default:
+        scanner.close();
+        break;
     }
   }
 }

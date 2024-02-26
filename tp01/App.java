@@ -5,7 +5,6 @@ class App {
     System.out.println("Bem Vindo a PokeDex!");
 
     Menu menu = new Menu();
-    menu.setOption();
-    menu.executeSelectedOption();
+    menu.execute();
   }
 }
