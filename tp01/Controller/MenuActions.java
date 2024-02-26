@@ -8,10 +8,22 @@ import java.util.Scanner;
 
 public class MenuActions {
 
+  RandomAccessFile raf;
+
+  public void startApp() throws Exception {
+    raf = new RandomAccessFile("./db/pokemons.db", "rw");
+  }
+
+  public void finishApp() {
+    try {
+      raf.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   public void loadData() {
     System.out.println("Carregando Dados...");
-    Pokemon[] pokemons = new Pokemon[1500];
-    int nPokemons = 0;
     try {
       URL urlAllPokemons = new URL(
         "https://pokeapi.co/api/v2/pokemon/?limit=2000&offset=0"
@@ -52,8 +64,13 @@ public class MenuActions {
 
         Pokemon pokemon = new Pokemon();
         pokemon.processPokemonData(inlinePokemon);
-        pokemons[nPokemons] = pokemon;
-        nPokemons++;
+        try {
+          byte bytes[] = pokemon.byteParse();
+          raf.write(bytes.length);
+          raf.write(bytes);
+        } catch (Exception e) {
+          System.out.println(e.getMessage());
+        }
         System.out.println(
           "Processado: " +
           i +
@@ -66,20 +83,6 @@ public class MenuActions {
       }
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
-    }
-
-    try {
-      RandomAccessFile raf = new RandomAccessFile("./db/pokemons.db", "rw");
-
-      for (int i = 0; i < nPokemons; i++) {
-        Pokemon pokemon = pokemons[i];
-        byte bytes[] = pokemon.byteParse();
-        raf.write(bytes.length);
-        raf.write(bytes);
-      }
-      raf.close();
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
     }
   }
 

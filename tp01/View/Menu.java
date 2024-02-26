@@ -34,9 +34,14 @@ public class Menu extends MenuActions {
   }
 
   public void execute() {
-    selectedOption = 0;
-    this.setOption();
-    this.executeSelectedOption();
+    try {
+      selectedOption = 0;
+      this.startApp();
+      this.setOption();
+      this.executeSelectedOption();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   public void executeSelectedOption() {
@@ -62,6 +67,7 @@ public class Menu extends MenuActions {
         this.execute();
         break;
       default:
+        this.finishApp();
         scanner.close();
         break;
     }
