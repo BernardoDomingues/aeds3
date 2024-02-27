@@ -1,6 +1,9 @@
 package Controller;
 
 import Model.Pokemon;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,8 +29,7 @@ public class MenuActions {
     System.out.println("Carregando Dados...");
     try {
       URL urlAllPokemons = new URL(
-        "https://pokeapi.co/api/v2/pokemon/?limit=2000&offset=0"
-      );
+          "https://pokeapi.co/api/v2/pokemon/?limit=2000&offset=0");
       HttpURLConnection conn = (HttpURLConnection) urlAllPokemons.openConnection();
       conn.setRequestMethod("GET");
       conn.connect();
@@ -72,22 +74,34 @@ public class MenuActions {
           System.out.println(e.getMessage());
         }
         System.out.println(
-          "Processado: " +
-          i +
-          "/" +
-          urlsArr.length +
-          " (" +
-          ((i * 100) / urlsArr.length) +
-          "%)"
-        );
+            "Processado: " +
+                i +
+                "/" +
+                urlsArr.length +
+                " (" +
+                ((i * 100) / urlsArr.length) +
+                "%)");
       }
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
   }
 
-  public void findAll() {
+  public void findAll() throws FileNotFoundException {
     System.out.println("Mostrando Registros...");
+    Pokemon pokemon = new Pokemon();
+    try {
+      raf.seek(0);
+      while (true) {
+        int size = raf.readByte();
+        byte[] ba = new byte[size];
+        raf.read(ba);
+        pokemon.byteRead(ba);
+        System.out.println(pokemon.toString());
+      }
+    } catch (Exception e) {
+      System.out.println("\nFim dos Registros...");
+    }
   }
 
   public void findOne() {

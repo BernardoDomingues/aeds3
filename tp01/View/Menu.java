@@ -1,6 +1,8 @@
 package View;
 
 import Controller.MenuActions;
+
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Menu extends MenuActions {
@@ -44,7 +46,7 @@ public class Menu extends MenuActions {
     }
   }
 
-  public void executeSelectedOption() {
+  public void executeSelectedOption() throws FileNotFoundException {
     switch (this.selectedOption) {
       case 1:
         this.loadData();
