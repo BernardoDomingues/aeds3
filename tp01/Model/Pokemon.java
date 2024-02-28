@@ -1,8 +1,12 @@
 package Model;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Pokemon {
@@ -116,10 +120,8 @@ public class Pokemon {
     String preName = "";
     for (int i = splitToGetName[0].length() - 1; i >= 0; i--) {
       if (splitToGetName[0].charAt(i) != ':') {
-        if (
-          splitToGetName[0].charAt(i) != '"' &&
-          splitToGetName[0].charAt(i) != ','
-        ) {
+        if (splitToGetName[0].charAt(i) != '"' &&
+            splitToGetName[0].charAt(i) != ',') {
           preName += splitToGetName[0].charAt(i);
         }
       } else {
@@ -182,5 +184,37 @@ public class Pokemon {
     dos.close();
 
     return by.toByteArray();
+  }
+
+  public void byteRead(byte[] arr) throws IOException, ParseException {
+    ByteArrayInputStream by = new ByteArrayInputStream(arr);
+    DataInputStream dis = new DataInputStream(by);
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
+
+    this.id = dis.readInt();
+    this.name = dis.readUTF();
+    this.weight = dis.readInt();
+    String secs = String.valueOf(dis.readInt());
+    this.created_at = originalFormat.parse(secs);
+    this.types = dis.readUTF();
+    this.is_default = dis.readUTF().toCharArray();
+    dis.close();
+
+  }
+
+  public String toString() {
+    return ("ID: " +
+        this.getId() +
+        "\nNome: " +
+        this.getName() +
+        "\nPeso: " +
+        this.getWeight() +
+        "\nData de Criação: " +
+        this.getCreatedAt() +
+        "\nTipos: " +
+        this.getTypes() +
+        "\nIs Default: " +
+        this.getIsDefaultAsString() +
+        "\n");
   }
 }
