@@ -46,6 +46,12 @@ public class Menu extends MenuActions {
     }
   }
 
+  private void findOneEntry() {
+    System.out.println("Insira o ID do pokemon que você procura: ");
+    int id = Integer.parseInt(scanner.nextLine());
+    this.findOne(id);
+  }
+
   public void executeSelectedOption() throws FileNotFoundException {
     switch (this.selectedOption) {
       case 1:
@@ -57,7 +63,7 @@ public class Menu extends MenuActions {
         this.execute();
         break;
       case 3:
-        this.findOne();
+        this.findOneEntry();
         this.execute();
         break;
       case 4:

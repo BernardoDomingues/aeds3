@@ -102,10 +102,7 @@ public class MenuActions {
     }
   }
 
-  public void findOne() {
-    System.out.println("Insira o ID do pokemon que você procura: \n");
-    Scanner scanner = new Scanner(System.in);
-    int id = scanner.nextInt();
+  public void findOne(int id) {
     Pokemon pokemon = new Pokemon();
 
     try {
@@ -119,10 +116,7 @@ public class MenuActions {
           System.out.println(pokemon.toString());
         }
       }
-    } catch (Exception e) {
-      System.out.println("\nFim dos Registros...");
-    }
-    scanner.close();
+    } catch (Exception e) {}
   }
 
   public void update() {
