@@ -1,8 +1,6 @@
 package Controller;
 
 import Model.Pokemon;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
@@ -105,7 +103,26 @@ public class MenuActions {
   }
 
   public void findOne() {
-    System.out.println("Ler Registro...");
+    System.out.println("Insira o ID do pokemon que você procura: \n");
+    Scanner scanner = new Scanner(System.in);
+    int id = scanner.nextInt();
+    Pokemon pokemon = new Pokemon();
+
+    try {
+      raf.seek(0);
+      while (true) {
+        int size = raf.readByte();
+        byte[] ba = new byte[size];
+        raf.read(ba);
+        pokemon.byteRead(ba);
+        if (id == pokemon.getId()) {
+          System.out.println(pokemon.toString());
+        }
+      }
+    } catch (Exception e) {
+      System.out.println("\nFim dos Registros...");
+    }
+    scanner.close();
   }
 
   public void update() {
