@@ -52,6 +52,16 @@ public class Menu extends MenuActions {
     this.findOne(id);
   }
 
+  private void updateEntry() {
+    System.out.println("Insira o ID do pokemon que você quer atualizar: ");
+    int id = Integer.parseInt(scanner.nextLine());
+    System.out.println("Insira o novo nome do pokemon: ");
+    String name = scanner.nextLine();
+    System.out.println("Insira o novo peso do pokemon: ");
+    int weight = Integer.parseInt(scanner.nextLine());
+    this.update(id, name, weight);
+  }
+
   public void executeSelectedOption() throws FileNotFoundException {
     switch (this.selectedOption) {
       case 1:
@@ -67,7 +77,7 @@ public class Menu extends MenuActions {
         this.execute();
         break;
       case 4:
-        this.update();
+        this.updateEntry();
         this.execute();
         break;
       case 5:
