@@ -116,11 +116,32 @@ public class MenuActions {
           System.out.println(pokemon.toString());
         }
       }
-    } catch (Exception e) {}
+    } catch (Exception e) {
+    }
   }
 
-  public void update() {
-    System.out.println("Atualizar Registro...");
+  public void update(int id, String name, int weight) {
+    Pokemon pokemon = new Pokemon();
+    try {
+      raf.seek(0);
+      while (true) {
+        int size = raf.readByte();
+        byte[] ba = new byte[size];
+        raf.read(ba);
+        pokemon.byteRead(ba);
+        if (id == pokemon.getId()) {
+          pokemon.setName(name);
+          pokemon.setWeight(weight);
+          byte[] bytes = pokemon.byteParse();
+          raf.seek(raf.getFilePointer() - size - 1);
+          raf.write(bytes.length);
+          raf.write(bytes);
+          break;
+        }
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   public void delete() {
